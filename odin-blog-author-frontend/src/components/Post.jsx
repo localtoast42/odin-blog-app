@@ -8,7 +8,7 @@ const Post = () => {
     const { postId } = useParams();
 
     useEffect(() => {
-        fetch(`https://<tempurl>/api/v1/posts/${postId}`, { mode: "cors" })
+        fetch(`http://localhost:3000/api/v1/posts/${postId}`, { mode: "cors" })
             .then((response) => response.json())
             .then((response) => setPost(response))
             .catch((error) => console.error(error));

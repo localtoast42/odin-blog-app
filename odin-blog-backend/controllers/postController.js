@@ -3,6 +3,14 @@ const Comment = require("../models/comment");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
+exports.post_get = asyncHandler(async (req, res, next) => {
+    const post = await Post.findById(req.params.id)
+        .populate("author")
+        .exec();
+  
+    res.json(post);
+});
+
 exports.post_list_get = asyncHandler(async (req, res, next) => {
     const allPosts = await Post.find()
         .sort({ timestamp: 1 })

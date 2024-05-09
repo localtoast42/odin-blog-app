@@ -9,6 +9,8 @@ router.use('/comments', commentsRouter);
 
 router.get('/', postController.post_list_get);
 
+router.get('/:id', postController.post_get);
+
 router.post('/', postController.post_create);
 
 router.update('/:id', postController.post_update);

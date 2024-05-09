@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
     title: { type: String, required: true, minLength: 3, maxLength: 100 },
+    author: { type: Schema.Types.ObjectId, ref: "User", required: true },
     text: { type: String, required: true },
     isPublished: { type: Boolean, default: false },
     publishedDate: { type: Date },

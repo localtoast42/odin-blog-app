@@ -5,6 +5,8 @@ const commentsRouter = require('./comments');
 
 const postController = require('../controllers/postController');
 
+router.use('/comments', commentsRouter);
+
 router.get('/', postController.post_list_get);
 
 router.post('/', postController.post_create);

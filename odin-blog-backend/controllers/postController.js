@@ -20,12 +20,12 @@ exports.post_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_list_get = asyncHandler(async (req, res, next) => {
-    const allPosts = await Post.find("title publishedDate")
+    const allPosts = await Post.find({}, "title publishedDate")
         .sort({ publishedDate: -1 })
         .populate("author")
         .exec();
   
-    res.render("post_list", { title: "Posts", user: req.user, post_list: allPosts });
+    res.json(allPosts);
 });
 
 exports.post_create = [

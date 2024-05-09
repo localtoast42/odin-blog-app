@@ -13,6 +13,11 @@ const app = express();
 
 app.use(helmet());
 
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
+const mongoDB = process.env.MONGODB_URI;
+mongoose.connect(mongoDB);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

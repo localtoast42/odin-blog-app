@@ -7,13 +7,21 @@ exports.post_get = asyncHandler(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
         .populate("author")
         .exec();
+
+    const postData = {
+        id: post.id,
+        title: post.title,
+        text: post.text,
+        publishedDate: post.publishedDate,
+        author: post.author.fullName,
+    }
   
-    res.json(post);
+    res.json(postData);
 });
 
 exports.post_list_get = asyncHandler(async (req, res, next) => {
-    const allPosts = await Post.find()
-        .sort({ timestamp: 1 })
+    const allPosts = await Post.find("title publishedDate")
+        .sort({ publishedDate: -1 })
         .populate("author")
         .exec();
   

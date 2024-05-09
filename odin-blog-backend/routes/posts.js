@@ -13,7 +13,7 @@ router.get('/:id', postController.post_get);
 
 router.post('/', postController.post_create);
 
-router.update('/:id', postController.post_update);
+router.put('/:id', postController.post_update);
 
 router.delete('/:id', postController.post_delete);
 

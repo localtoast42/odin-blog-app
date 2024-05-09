@@ -7,7 +7,7 @@ router.get('/', commentController.comment_list_get);
 
 router.post('/', commentController.comment_create);
 
-router.update('/:id', commentController.comment_update);
+// router.update('/:id', commentController.comment_update);
 
 router.delete('/:id', commentController.comment_delete);
 

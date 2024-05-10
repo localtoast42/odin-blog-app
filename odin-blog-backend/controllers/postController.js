@@ -22,7 +22,7 @@ exports.post_get = asyncHandler(async (req, res, next) => {
 exports.post_list_get = asyncHandler(async (req, res, next) => {
     const allPosts = await Post.find({}, "title publishedDate")
         .sort({ publishedDate: -1 })
-        .populate("author")
+        .populate("author", "firstName lastName")
         .exec();
   
     res.json(allPosts);
@@ -45,7 +45,7 @@ exports.post_create = [
 
         const post = new Post({
             title: req.body.title,
-            author: req.user.id,
+            author: req.body.authorid,
             text: req.body.text,
         });
 

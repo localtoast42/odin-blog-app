@@ -70,7 +70,7 @@ const Post = () => {
                 <button onClick={handleEditToggle}>Edit</button>
             </div>
         );
-    };
+    }
 };
 
 export default Post;

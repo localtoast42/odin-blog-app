@@ -1,0 +1,6 @@
+.home-container {
+    width: clamp(320px, 80vw, 800px);
+    padding: 10px 0;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}

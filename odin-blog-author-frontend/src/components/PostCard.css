@@ -1,0 +1,28 @@
+.postcard {
+    color: black;
+    background-color: #e7e5e4;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.postcard:hover {
+    background-color: #d6d3d1;
+}
+
+.postcard:active {
+    background-color: #a8a29e;
+}
+
+.postcard-title {
+    margin: 0;
+    font-size: 24px;
+}
+
+.postcard-author {
+    margin: 0;
+    font-size: 18px;
+}

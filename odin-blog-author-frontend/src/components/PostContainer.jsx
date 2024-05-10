@@ -15,7 +15,7 @@ const PostContainer = () => {
     return (
         <div className="post-container">
             {postList.map(post => <PostCard 
-                key={post.id} 
+                key={post._id} 
                 post={post} />
             )}
         </div>

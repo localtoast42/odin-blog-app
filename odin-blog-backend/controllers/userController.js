@@ -13,7 +13,7 @@ exports.user_create = [
         .withMessage("Username must be provided.")
         .isAlphanumeric()
         .withMessage("Username has non-alphanumeric characters."),
-    body("user_password")
+    body("password")
         .trim()
         .isLength( { min: 1 })
         .escape()
@@ -24,17 +24,17 @@ exports.user_create = [
         .escape()
         .withMessage("Password must be provided.")
         .custom((value, { req }) => {
-            return value === req.body.user_password;
+            return value === req.body.password;
         })
         .withMessage("Passwords must match."),
-    body("first_name")
+    body("firstName")
         .trim()
         .isLength( { min: 1 })
         .escape()
         .withMessage("First name must be provided.")
         .isAlphanumeric()
         .withMessage("First name has non-alphanumeric characters."),
-    body("last_name")
+    body("lastName")
         .trim()
         .isLength( { min: 1 })
         .escape()
@@ -53,12 +53,7 @@ exports.user_create = [
         });
 
         if (!errors.isEmpty()) {
-            res.render("signup_form", {
-                title: "Sign Up",
-                user: user,
-                errors: errors.array(),
-            });
-            return;
+            res.send(errors.array());
         } else {
             bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
                 if (err) {

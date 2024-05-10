@@ -13,7 +13,7 @@ const UserSchema = new Schema({
 UserSchema.virtual("fullName").get(function () {
     let fullName = "";
     if (this.firstName && this.lastName) {
-        fullname = `${this.firstName} ${this.lastName}`;
+        fullName = `${this.firstName} ${this.lastName}`;
     }
   
     return fullName;

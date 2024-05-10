@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 const PostCard = ({ post }) => {
 
     return (
-        <NavLink to={`posts/${post.id}`}>
+        <NavLink to={`posts/${post._id}`}>
             <h3>{post.title}</h3>
-            <h2>{post.author}</h2>
+            <h2>{post.author.firstName + ' '  + post.author.lastName}</h2>
             {post.publishedDate ? <h2>{post.publishedDate}</h2> : false}
         </NavLink>
     );

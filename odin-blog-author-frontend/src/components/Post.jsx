@@ -65,7 +65,8 @@ const Post = () => {
         return (
             <div className="post">
                 <h3 className="post-title">{post.title}</h3>
-                <h2 className="post-info">{post.author + ' ' + post.datePublished}</h2>
+                <h2 className="post-author">{`by ${post.author}`}</h2>
+                {post.isPublished ? <h2 className="post-date">{post.datePublished}</h2> : false}
                 <p className="post-text">{post.text}</p>
                 <button onClick={handleEditToggle}>Edit</button>
             </div>

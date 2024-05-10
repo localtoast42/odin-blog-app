@@ -6,9 +6,9 @@ function App() {
   return (
     <>
       <nav className='navbar'>
-        <NavLink>Home</NavLink>
-        <NavLink>Sign in</NavLink>
-        <NavLink>Sign out</NavLink>
+        <NavLink to="">Home</NavLink>
+        <NavLink to="login">Sign in</NavLink>
+        <NavLink to="logout">Sign out</NavLink>
       </nav>
       <div className='content'>
         <Outlet />

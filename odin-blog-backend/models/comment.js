@@ -6,7 +6,8 @@ const CommentSchema = new Schema({
     post: { type: Schema.Types.ObjectId, ref: "Post", required: true },
     author: { type: Schema.Types.ObjectId, ref: "User", required: true },
     text: { type: String, required: true },
-    timestamp: { type: Date, required: true },
+    postDate: { type: Date, required: true },
+    lastEditDate: { type: Date },
 });
 
 CommentSchema.virtual("url").get(function () {

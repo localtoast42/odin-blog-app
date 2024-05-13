@@ -8,7 +8,7 @@ exports.comment_list_get = asyncHandler(async (req, res, next) => {
         .populate("author")
         .exec();
   
-    res.render("comment_list", { title: "Comments", user: req.user, comment_list: allComments });
+    res.json(allComments);
 });
 
 exports.comment_create = [
@@ -25,7 +25,7 @@ exports.comment_create = [
             author: req.user.id,
             text: req.body.text,
             post: req.body.postid,
-            timestamp: Date.now(),
+            postDate: Date.now(),
         });
 
         if (!errors.isEmpty()) {
@@ -37,7 +37,29 @@ exports.comment_create = [
     }),
 ];
 
-exports.comment_update = [];
+exports.comment_update = [
+    body("text")
+        .trim()
+        .isLength( { min: 1 })
+        .escape()
+        .withMessage("Comment must not be empty."),
+  
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
+
+        const comment = new Comment({
+            text: req.body.text,
+            lastEditDate: Date.now(),
+        });
+  
+        if (!errors.isEmpty()) {
+            res.send(errors.array());
+        } else {
+            const updatedComment = await Comment.findByIdAndUpdate(req.params.id, comment, {});
+            res.redirect(updatedComment.url);
+        }
+    }),
+];
 
 exports.comment_delete = asyncHandler(async (req, res, next) => {    
     await Comment.findByIdAndDelete(req.params.id);

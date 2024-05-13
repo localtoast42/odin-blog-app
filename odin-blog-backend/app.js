@@ -3,6 +3,7 @@ const createError = require('http-errors');
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const passport = require(passport);
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const compression = require('compression');
@@ -19,6 +20,9 @@ const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 const mongoDB = process.env.MONGODB_URI;
 mongoose.connect(mongoDB);
+
+require('./config/passport')(passport);
+app.use(passport.initialize());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

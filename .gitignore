@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 .env
+id_rsa_priv.pem
+generateKeypair.js
 
 # Editor directories and files
 .vscode/*

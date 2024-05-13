@@ -10,7 +10,7 @@ exports.user_login = asyncHandler(async (req, res, next) => {
         if (!user) {
             return res.status(401).json({ success: false, msg: "Incorrect username" });
         };
-        const match = await bcrypt.compare(password, req.body.password);
+        const match = await bcrypt.compare(req.body.password, user.password);
         if (!match) {
             return res.status(401).json({ success: false, msg: "Incorrect password" });
         }

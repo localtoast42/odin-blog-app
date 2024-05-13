@@ -2,6 +2,24 @@ const User = require("../models/user");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
+const utils = require('../lib/utils');
+
+exports.user_login = asyncHandler(async (req, res, next) => {
+    try {
+        const user = await User.findOne({ username: req.body.username });
+        if (!user) {
+            return res.status(401).json({ success: false, msg: "Incorrect username" });
+        };
+        const match = await bcrypt.compare(password, req.body.password);
+        if (!match) {
+            return res.status(401).json({ success: false, msg: "Incorrect password" });
+        }
+        const tokenObject = utils.issueJWT(user);
+        res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
+    } catch(err) {
+        return next(err);
+    }
+});
 
 exports.user_list_get = asyncHandler(async (req, res, next) => {
     const allUsers = await User.find({}, "username firstName lastName").sort({ lastName: 1 }).exec();

@@ -3,7 +3,10 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 
-exports.user_list_get = {};
+exports.user_list_get = asyncHandler(async (req, res, next) => {
+    const allUsers = await User.find({}, "username firstName lastName").sort({ lastName: 1 }).exec();
+    res.json(allUsers);
+});
 
 exports.user_create = [
     body("username")
@@ -67,6 +70,40 @@ exports.user_create = [
     }),
 ];
 
-exports.user_update = [];
+exports.user_update = [
+    body("firstName")
+        .trim()
+        .isLength( { min: 1 })
+        .escape()
+        .withMessage("First name must be provided.")
+        .isAlphanumeric()
+        .withMessage("First name has non-alphanumeric characters."),
+    body("lastName")
+        .trim()
+        .isLength( { min: 1 })
+        .escape()
+        .withMessage("Last name must be provided.")
+        .isAlphanumeric()
+        .withMessage("Last name has non-alphanumeric characters."),
+  
+    asyncHandler(async (req, res, next) => {
+        const errors = validationResult(req);
 
-exports.user_delete = {};
+        const user = new User({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+        });
+  
+        if (!errors.isEmpty()) {
+            res.send(errors.array());
+        } else {
+            const updatedUser = await User.findByIdAndUpdate(req.params.id, user, {});
+            res.redirect(updatedUser.url);
+        }
+    }),
+];
+
+exports.user_delete = asyncHandler(async (req, res, next) => {
+    await User.findByIdAndDelete(req.body.userid);
+    res.redirect("/users");
+});

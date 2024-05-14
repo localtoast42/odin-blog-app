@@ -2,6 +2,18 @@ const Comment = require("../models/comment");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
+function isCommentAuthor(req, res, next) {
+    Comment.findOne({ _id: req.params.commentId })
+        .then((comment) => {
+            if (comment.author === req.user.id) {
+                return next();
+            } else {
+                return res.status(401).json({ success: false, msg: "Unauthorized" });
+            }
+        })
+        .catch((err) => next(err));
+};
+
 exports.comment_list_get = asyncHandler(async (req, res, next) => {
     const allComments = await Comment.find({ post: req.params.postId })
         .sort({ timestamp: 1 })
@@ -38,6 +50,8 @@ exports.comment_create = [
 ];
 
 exports.comment_update = [
+    isCommentAuthor(req, res, next),
+
     body("text")
         .trim()
         .isLength( { min: 1 })
@@ -61,7 +75,11 @@ exports.comment_update = [
     }),
 ];
 
-exports.comment_delete = asyncHandler(async (req, res, next) => {    
-    await Comment.findByIdAndDelete(req.params.commentId);
-    res.redirect(process.env.FRONTEND_URL + '/comments');
-});
+exports.comment_delete = [
+    isCommentAuthor(req, res, next),
+
+    asyncHandler(async (req, res, next) => {   
+        await Comment.findByIdAndDelete(req.params.commentId);
+        res.redirect(process.env.FRONTEND_URL + '/comments');
+    }),
+];

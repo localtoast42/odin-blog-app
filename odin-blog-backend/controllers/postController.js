@@ -3,6 +3,14 @@ const Comment = require("../models/comment");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
+function isAuthor(req, res, next) {
+    if (req.user.isAuthor){
+        next();
+    } else {
+        return res.status(401).json({ success: false, msg: "Not an author" });
+    };
+};
+
 exports.post_get = asyncHandler(async (req, res, next) => {
     const post = await Post.findById(req.params.postId)
         .populate("author")
@@ -29,6 +37,8 @@ exports.post_list_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_create = [
+    isAuthor(req, res, next),
+
     body("title")
         .trim()
         .isLength( { min: 1 })
@@ -59,6 +69,8 @@ exports.post_create = [
 ];
 
 exports.post_update = [
+    isAuthor(req, res, next),
+
     body("title")
         .trim()
         .isLength( { min: 1 })
@@ -94,8 +106,12 @@ exports.post_update = [
     }),
 ];
 
-exports.post_delete = asyncHandler(async (req, res, next) => {    
-    await Comment.deleteMany({ post: req.params.postId });
-    await Post.findByIdAndDelete(req.params.postId);
-    res.redirect(process.env.FRONTEND_URL + '/posts');
-});
+exports.post_delete = [
+    isAuthor(req, res, next),
+
+    asyncHandler(async (req, res, next) => {    
+        await Comment.deleteMany({ post: req.params.postId });
+        await Post.findByIdAndDelete(req.params.postId);
+        res.redirect(process.env.FRONTEND_URL + '/posts');
+    }),
+]

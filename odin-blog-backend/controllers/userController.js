@@ -82,7 +82,7 @@ exports.user_create = [
                 }
                 user.password = hashedPassword;
                 const result = await user.save();
-                res.redirect("/");
+                res.redirect(process.env.FRONTEND_URL + '/login');
             });
         };
     }),
@@ -116,12 +116,12 @@ exports.user_update = [
             res.send(errors.array());
         } else {
             const updatedUser = await User.findByIdAndUpdate(req.params.id, user, {});
-            res.redirect(updatedUser.url);
+            res.redirect(process.env.FRONTEND_URL + updatedUser.url);
         }
     }),
 ];
 
 exports.user_delete = asyncHandler(async (req, res, next) => {
     await User.findByIdAndDelete(req.body.userid);
-    res.redirect("/users");
+    res.redirect(process.env.FRONTEND_URL + '/users');
 });

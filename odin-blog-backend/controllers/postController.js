@@ -53,7 +53,7 @@ exports.post_create = [
             return;
         } else {
             await post.save();
-            res.redirect('/');
+            res.redirect(process.env.FRONTEND_URL + post.url);
         };
     }),
 ];
@@ -89,7 +89,7 @@ exports.post_update = [
             return;
         } else {
             const updatedPost = await Post.findByIdAndUpdate(req.params.id, post, {});
-            res.redirect(updatedPost.url);
+            res.redirect(process.env.FRONTEND_URL + updatedPost.url);
         };
     }),
 ];
@@ -97,5 +97,5 @@ exports.post_update = [
 exports.post_delete = asyncHandler(async (req, res, next) => {    
     await Comment.deleteMany({ post: req.params.id });
     await Post.findByIdAndDelete(req.params.id);
-    res.redirect("/posts");
+    res.redirect(process.env.FRONTEND_URL + '/posts');
 });

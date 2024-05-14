@@ -32,7 +32,7 @@ exports.comment_create = [
             return;
         } else {
             await comment.save();
-            res.redirect('/');
+            res.redirect(process.env.FRONTEND_URL + comment.url);
         };
     }),
 ];
@@ -56,12 +56,12 @@ exports.comment_update = [
             res.send(errors.array());
         } else {
             const updatedComment = await Comment.findByIdAndUpdate(req.params.id, comment, {});
-            res.redirect(updatedComment.url);
+            res.redirect(process.env.FRONTEND_URL + updatedComment.url);
         }
     }),
 ];
 
 exports.comment_delete = asyncHandler(async (req, res, next) => {    
     await Comment.findByIdAndDelete(req.params.id);
-    res.redirect("/comments");
+    res.redirect(process.env.FRONTEND_URL + '/comments');
 });

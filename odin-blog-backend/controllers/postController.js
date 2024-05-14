@@ -4,7 +4,7 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
 exports.post_get = asyncHandler(async (req, res, next) => {
-    const post = await Post.findById(req.params.id)
+    const post = await Post.findById(req.params.postId)
         .populate("author")
         .exec();
 
@@ -74,7 +74,7 @@ exports.post_update = [
         const errors = validationResult(req);
 
         const post = new Post({
-            _id: req.params.id,
+            _id: req.params.postId,
             title: req.body.title,
             author: req.user.id,
             text: req.body.text,
@@ -88,14 +88,14 @@ exports.post_update = [
         if (!errors.isEmpty()) {
             return;
         } else {
-            const updatedPost = await Post.findByIdAndUpdate(req.params.id, post, {});
+            const updatedPost = await Post.findByIdAndUpdate(req.params.postId, post, {});
             res.redirect(process.env.FRONTEND_URL + updatedPost.url);
         };
     }),
 ];
 
 exports.post_delete = asyncHandler(async (req, res, next) => {    
-    await Comment.deleteMany({ post: req.params.id });
-    await Post.findByIdAndDelete(req.params.id);
+    await Comment.deleteMany({ post: req.params.postId });
+    await Post.findByIdAndDelete(req.params.postId);
     res.redirect(process.env.FRONTEND_URL + '/posts');
 });

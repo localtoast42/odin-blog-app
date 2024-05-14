@@ -3,9 +3,9 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
 exports.comment_list_get = asyncHandler(async (req, res, next) => {
-    const allComments = await Comment.find()
+    const allComments = await Comment.find({ post: req.params.postId })
         .sort({ timestamp: 1 })
-        .populate("author")
+        .populate("author", "firstName lastName")
         .exec();
   
     res.json(allComments);
@@ -24,7 +24,7 @@ exports.comment_create = [
         const comment = new Comment({
             author: req.user.id,
             text: req.body.text,
-            post: req.body.postid,
+            post: req.params.postId,
             postDate: Date.now(),
         });
 
@@ -55,13 +55,13 @@ exports.comment_update = [
         if (!errors.isEmpty()) {
             res.send(errors.array());
         } else {
-            const updatedComment = await Comment.findByIdAndUpdate(req.params.id, comment, {});
+            const updatedComment = await Comment.findByIdAndUpdate(req.params.commentId, comment, {});
             res.redirect(process.env.FRONTEND_URL + updatedComment.url);
         }
     }),
 ];
 
 exports.comment_delete = asyncHandler(async (req, res, next) => {    
-    await Comment.findByIdAndDelete(req.params.id);
+    await Comment.findByIdAndDelete(req.params.commentId);
     res.redirect(process.env.FRONTEND_URL + '/comments');
 });

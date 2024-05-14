@@ -45,7 +45,7 @@ exports.post_create = [
 
         const post = new Post({
             title: req.body.title,
-            author: req.body.authorid,
+            author: req.user.id,
             text: req.body.text,
         });
 

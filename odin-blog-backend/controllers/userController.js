@@ -101,7 +101,7 @@ exports.user_create = [
 ];
 
 exports.user_update = [
-    isUserCreator(req, res, next),
+    isUserCreator,
 
     body("firstName")
         .trim()
@@ -136,7 +136,7 @@ exports.user_update = [
 ];
 
 exports.user_delete = [
-    isUserCreator(req, res, next),
+    isUserCreator,
 
     asyncHandler(async (req, res, next) => {
         await User.findByIdAndDelete(req.params.userId);

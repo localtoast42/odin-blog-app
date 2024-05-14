@@ -50,7 +50,7 @@ exports.comment_create = [
 ];
 
 exports.comment_update = [
-    isCommentAuthor(req, res, next),
+    isCommentAuthor,
 
     body("text")
         .trim()
@@ -76,7 +76,7 @@ exports.comment_update = [
 ];
 
 exports.comment_delete = [
-    isCommentAuthor(req, res, next),
+    isCommentAuthor,
 
     asyncHandler(async (req, res, next) => {   
         await Comment.findByIdAndDelete(req.params.commentId);

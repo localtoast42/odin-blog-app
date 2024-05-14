@@ -37,7 +37,7 @@ exports.post_list_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_create = [
-    isAuthor(req, res, next),
+    isAuthor,
 
     body("title")
         .trim()
@@ -69,7 +69,7 @@ exports.post_create = [
 ];
 
 exports.post_update = [
-    isAuthor(req, res, next),
+    isAuthor,
 
     body("title")
         .trim()
@@ -107,7 +107,7 @@ exports.post_update = [
 ];
 
 exports.post_delete = [
-    isAuthor(req, res, next),
+    isAuthor,
 
     asyncHandler(async (req, res, next) => {    
         await Comment.deleteMany({ post: req.params.postId });

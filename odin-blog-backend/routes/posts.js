@@ -6,7 +6,7 @@ const commentsRouter = require('./comments');
 
 const postController = require('../controllers/postController');
 
-router.use('/comments', commentsRouter);
+router.use('/:postId/comments', commentsRouter);
 
 router.get('/',
     passport.authenticate('jwt', { 
@@ -16,7 +16,7 @@ router.get('/',
     postController.post_list_get
 );
 
-router.get('/:id', postController.post_get);
+router.get('/:postId', postController.post_get);
 
 router.post('/', 
     passport.authenticate('jwt', { 
@@ -26,7 +26,7 @@ router.post('/',
     postController.post_create
 );
 
-router.put('/:id', 
+router.put('/:postId', 
     passport.authenticate('jwt', { 
         session: false,
         failureRedirect: process.env.FRONTEND_URL + "/login"
@@ -34,7 +34,7 @@ router.put('/:id',
     postController.post_update
 );
 
-router.delete('/:id', 
+router.delete('/:postId', 
     passport.authenticate('jwt', { 
         session: false,
         failureRedirect: process.env.FRONTEND_URL + "/login"

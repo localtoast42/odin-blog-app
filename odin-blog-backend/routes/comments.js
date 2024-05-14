@@ -1,6 +1,6 @@
 const express = require('express');
 const passport = require('passport');
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 const commentController = require('../controllers/commentController');
 
@@ -14,7 +14,7 @@ router.post('/',
     commentController.comment_create
 );
 
-router.put('/:id', 
+router.put('/:commentId', 
     passport.authenticate('jwt', { 
         session: false,
         failureRedirect: process.env.FRONTEND_URL + "/login"
@@ -22,7 +22,7 @@ router.put('/:id',
     commentController.comment_update
 );
 
-router.delete('/:id', 
+router.delete('/:commentId', 
     passport.authenticate('jwt', { 
         session: false,
         failureRedirect: process.env.FRONTEND_URL + "/login"

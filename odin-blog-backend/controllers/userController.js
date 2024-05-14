@@ -4,6 +4,18 @@ const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const utils = require('../lib/utils');
 
+function isUserCreator(req, res, next) {
+    User.findOne({ _id: req.params.userId })
+        .then((user) => {
+            if (user.id === req.user.id) {
+                return next();
+            } else {
+                return res.status(401).json({ success: false, msg: "Unauthorized" });
+            }
+        })
+        .catch((err) => next(err));
+};
+
 exports.user_login = asyncHandler(async (req, res, next) => {
     try {
         const user = await User.findOne({ username: req.body.username });
@@ -89,6 +101,8 @@ exports.user_create = [
 ];
 
 exports.user_update = [
+    isUserCreator(req, res, next),
+
     body("firstName")
         .trim()
         .isLength( { min: 1 })
@@ -115,13 +129,17 @@ exports.user_update = [
         if (!errors.isEmpty()) {
             res.send(errors.array());
         } else {
-            const updatedUser = await User.findByIdAndUpdate(req.params.id, user, {});
+            const updatedUser = await User.findByIdAndUpdate(req.params.userId, user, {});
             res.redirect(process.env.FRONTEND_URL + updatedUser.url);
         }
     }),
 ];
 
-exports.user_delete = asyncHandler(async (req, res, next) => {
-    await User.findByIdAndDelete(req.body.userid);
-    res.redirect(process.env.FRONTEND_URL + '/users');
-});
+exports.user_delete = [
+    isUserCreator(req, res, next),
+
+    asyncHandler(async (req, res, next) => {
+        await User.findByIdAndDelete(req.params.userId);
+        res.redirect(process.env.FRONTEND_URL + '/users');
+    }),
+];

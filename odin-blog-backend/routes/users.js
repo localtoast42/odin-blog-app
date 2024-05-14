@@ -8,7 +8,7 @@ router.get('/', userController.user_list_get);
 
 router.post('/', userController.user_create);
 
-router.put('/:id',
+router.put('/:userId',
     passport.authenticate('jwt', { 
         session: false,
         failureRedirect: process.env.FRONTEND_URL + "/login"
@@ -16,11 +16,11 @@ router.put('/:id',
     userController.user_update
 );
 
-router.delete('/:id',
+router.delete('/:userId',
     passport.authenticate('jwt', { 
         session: false,
         failureRedirect: process.env.FRONTEND_URL + "/login"
-    }),  
+    }),
     userController.user_delete
 );
 

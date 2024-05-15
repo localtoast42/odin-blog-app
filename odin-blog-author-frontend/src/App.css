@@ -3,3 +3,25 @@
     display: flex;
     justify-content: center;
 }
+
+.navbar {
+    min-height: 48px;
+    border-bottom: 1px solid #d1d5db;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.navbar > a {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #6b7280;
+}
+
+.navbar > a:hover {
+    background-color: #d6d3d1;
+    color: #374151;
+}

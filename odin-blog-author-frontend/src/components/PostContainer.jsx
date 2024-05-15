@@ -1,6 +1,7 @@
 import "./PostContainer.css";
 import { useState, useEffect } from "react";
 import PostCard from "./PostCard";
+import NewPostCard from "./NewPostCard";
 
 const PostContainer = () => {
     const [postList, setPostList] = useState([]);
@@ -14,6 +15,7 @@ const PostContainer = () => {
 
     return (
         <div className="post-container">
+            <NewPostCard />
             {postList.map(post => <PostCard 
                 key={post._id} 
                 post={post} />

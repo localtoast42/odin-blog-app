@@ -8,13 +8,7 @@ const postController = require('../controllers/postController');
 
 router.use('/:postId/comments', commentsRouter);
 
-router.get('/',
-    passport.authenticate('jwt', { 
-        session: false,
-        failureRedirect: process.env.FRONTEND_URL + "/login"
-    }),
-    postController.post_list_get
-);
+router.get('/', postController.post_list_get);
 
 router.get('/:postId', postController.post_get);
 

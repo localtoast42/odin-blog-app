@@ -11,36 +11,36 @@ const Post = () => {
         setEditable(!editable);
     }
 
-    // async function handleDelete() {
-    //     await fetch(`http://localhost:3000/api/v1/posts/${postId}`, {
-    //         mode: "cors",
-    //         credentials: "include",
-    //         method: 'DELETE' 
-    //     });
-    // }
+    async function handleDelete() {
+        await fetch(`http://localhost:3000/api/v1/posts/${postId}`, {
+            mode: "cors",
+            credentials: "include",
+            method: 'DELETE' 
+        });
+    }
 
-    // async function handleSubmit(e) {
-    //     e.preventDefault();
+    async function handleSubmit(e) {
+        e.preventDefault();
 
-    //     const newPost = {
-    //         id: postId,
-    //         title: e.target.title.value,
-    //         text: e.target.text.value,
-    //     };
+        const newPost = {
+            id: postId,
+            title: e.target.title.value,
+            text: e.target.text.value,
+        };
 
-    //     if (e.target.publish) {
-    //         newPost.isPublished = true;
-    //         newPost.publishedDate = Date.now();
-    //     }
+        if (e.target.publish) {
+            newPost.isPublished = true;
+            newPost.publishedDate = Date.now();
+        }
 
-    //     await fetch(`http://localhost:3000/api/v1/posts/${postId}`, {
-    //         method: 'PUT',
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify(newPost),
-    //     });
+        await fetch(`http://localhost:3000/api/v1/posts/${postId}`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newPost),
+        });
 
-    //     setEditable(!editable);
-    // }
+        setEditable(!editable);
+    }
 
     if (editable) {
         return (

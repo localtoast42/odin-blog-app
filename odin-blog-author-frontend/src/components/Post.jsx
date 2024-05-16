@@ -44,22 +44,24 @@ const Post = () => {
 
     if (editable) {
         return (
-            <form onSubmit={handleSubmit} className="post-edit">
-                <input 
-                    type="text" 
-                    name="title" 
-                    id="post-title" 
-                    value={ post.title ? post.title : '' }
-                    placeholder="Title"/>
-                <textarea 
-                    name="text" 
-                    id="post-text"
-                    value={ post.text ? post.text : '' }
-                    placeholder="Write your post...">
-                </textarea>
-                <button name="save">Save</button>
-                {post.isPublished ? false : <button name="publish">Publish</button>}
-            </form>
+            <div className="post">
+                <form onSubmit={handleSubmit} className="post-edit">
+                    <input
+                        type="text"
+                        name="title"
+                        id="post-title"
+                        value={ post.title ? post.title : '' }
+                        placeholder="Title"/>
+                    <textarea
+                        name="text"
+                        id="post-text"
+                        value={ post.text ? post.text : '' }
+                        placeholder="Write your post...">
+                    </textarea>
+                    <button name="save">Save</button>
+                    {post.isPublished ? false : <button name="publish">Publish</button>}
+                </form>
+            </div>
         );
     } else {
         return (

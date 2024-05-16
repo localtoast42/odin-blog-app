@@ -45,9 +45,7 @@ exports.user_logout = asyncHandler(async (req, res, next) => {
         expires: new Date(Date.now() + 5 * 1000),
         httpOnly: true,
     });
-    res
-        .status(200)
-        .json({ success: true, message: 'User logged out successfully' })
+    res.redirect(process.env.FRONTEND_URL);
 });
 
 exports.user_list_get = asyncHandler(async (req, res, next) => {

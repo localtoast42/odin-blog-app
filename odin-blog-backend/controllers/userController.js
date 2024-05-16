@@ -53,6 +53,17 @@ exports.user_list_get = asyncHandler(async (req, res, next) => {
     res.json(allUsers);
 });
 
+exports.user_self_get = asyncHandler(async (req, res, next) => {
+    const user = {
+        id: req.user.id,
+        firstName: req.user.firstName,
+        lastName: req.user.lastName,
+        username: req.user.username
+    }
+
+    res.json(user);
+});
+
 exports.user_create = [
     body("username")
         .trim()

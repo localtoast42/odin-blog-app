@@ -6,6 +6,13 @@ const userController = require('../controllers/userController');
 
 router.get('/', userController.user_list_get);
 
+router.get('/self', 
+    passport.authenticate('jwt', { 
+        session: false
+    }), 
+    userController.user_self_get
+);
+
 router.post('/', userController.user_create);
 
 router.put('/:userId',

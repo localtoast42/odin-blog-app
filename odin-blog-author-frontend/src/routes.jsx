@@ -1,9 +1,10 @@
 import App from "./App";
-import Home from "./components/Home";
+import PostContainer from "./components/PostContainer";
 import Post from "./components/Post";
 import NewPost from "./components/NewPost";
 import Login from "./components/Login";
 import ErrorPage from "./components/ErrorPage";
+import { postLoader, postContainerLoader } from "./loaders";
 
 const routes = [
     {
@@ -11,9 +12,20 @@ const routes = [
         element: <App />,
         errorElement: <ErrorPage />,
         children: [
-            { index: true, element: <Home /> },
-            { path: "/posts/:postId", element: <Post /> },
-            { path: "/posts/create", element: <NewPost /> },
+            { 
+                index: true, 
+                element: <PostContainer />,
+                loader: postContainerLoader 
+            },
+            { 
+                path: "/posts/:postId", 
+                element: <Post />,
+                loader: postLoader 
+            },
+            { 
+                path: "/posts/create", 
+                element: <NewPost /> 
+            },
         ],
     },
     {

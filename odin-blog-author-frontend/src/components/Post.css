@@ -22,3 +22,23 @@
     margin: 10px 0;
     font-size: 18px;
 }
+
+.post-edit {
+    display: grid;
+    gap: 12px;
+}
+
+.title-input {
+    font-size: 24px;
+}
+
+.text-input {
+    font-size: 18px;
+}
+
+.save-btn {
+    font-size: 18px;
+    font-weight: 500;
+    padding: 8px 24px;
+    justify-self: end;
+}

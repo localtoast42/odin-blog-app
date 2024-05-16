@@ -5,7 +5,7 @@ const NewPostCard = () => {
 
     return (
         <NavLink to={`posts/create`} className={"postcard"}>
-            <h3 className="postcard-title">Create New Post</h3>
+            <h3 className="postcard-title">+ Create New Post</h3>
         </NavLink>
     );
 };

@@ -27,10 +27,27 @@ exports.user_login = asyncHandler(async (req, res, next) => {
             return res.status(401).json({ success: false, msg: "Incorrect password" });
         }
         const tokenObject = utils.issueJWT(user);
-        res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
+        res
+            .status(201)
+            .cookie('jwt', tokenObject.token, { 
+                httpOnly: true,
+                encode: String, 
+                expires: new Date(Date.now() + 24 * 3600000) 
+            })
+            .redirect(process.env.FRONTEND_URL);
     } catch(err) {
         return next(err);
     }
+});
+
+exports.user_logout = asyncHandler(async (req, res, next) => {
+    res.cookie('jwt', 'none', {
+        expires: new Date(Date.now() + 5 * 1000),
+        httpOnly: true,
+    });
+    res
+        .status(200)
+        .json({ success: true, message: 'User logged out successfully' })
 });
 
 exports.user_list_get = asyncHandler(async (req, res, next) => {

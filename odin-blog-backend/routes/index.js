@@ -6,6 +6,7 @@ const usersRouter = require('./users');
 const postsRouter = require('./posts');
 
 router.post('/login', userController.user_login);
+router.post('/logout', userController.user_logout);
 
 router.use('/users', usersRouter)
 router.use('/posts', postsRouter)

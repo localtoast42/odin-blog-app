@@ -13,7 +13,12 @@ const indexRouter = require('./routes/index');
 
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+    credentials: true,
+    origin: process.env.FRONTEND_URL
+};
+
+app.use(cors(corsOptions));
 app.use(helmet());
 
 const mongoose = require("mongoose");

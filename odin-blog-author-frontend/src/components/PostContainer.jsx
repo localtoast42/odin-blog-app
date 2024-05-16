@@ -1,25 +1,25 @@
+import "./Home.css";
 import "./PostContainer.css";
-import { useState, useEffect } from "react";
 import PostCard from "./PostCard";
 import NewPostCard from "./NewPostCard";
+import { useLoaderData } from "react-router-dom";
 
 const PostContainer = () => {
-    const [postList, setPostList] = useState([]);
-
-    useEffect(() => {
-        fetch(`http://localhost:3000/api/v1/posts/`, { mode: "cors" })
-            .then((response) => response.json())
-            .then((response) => setPostList(response))
-            .catch((error) => console.error(error));
-    }, []);
+    const { posts } = useLoaderData();
 
     return (
-        <div className="post-container">
-            <NewPostCard />
-            {postList.map(post => <PostCard 
-                key={post._id} 
-                post={post} />
-            )}
+        <div className="home-container">
+            <div className="post-container">
+                <NewPostCard />
+                {posts.map(post => <PostCard 
+                    key={post._id} 
+                    post={post} />
+                )}
+            </div>
+            <div className="sidebar">
+                <h2>Description</h2>
+                <p>This is my blog, check it out!</p>
+            </div>
         </div>
     );
 };

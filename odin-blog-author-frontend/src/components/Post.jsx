@@ -1,51 +1,51 @@
 import "./Post.css";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 
 const Post = () => {
-    const [post, setPost] = useState({});
     const [editable, setEditable] = useState(false)
 
-    const { postId } = useParams();
-
-    useEffect(() => {
-        fetch(`http://localhost:3000/api/v1/posts/${postId}`, { mode: "cors" })
-            .then((response) => response.json())
-            .then((response) => setPost(response))
-            .catch((error) => console.error(error));
-    }, [postId]);
+    const { post } = useLoaderData();
 
     function handleEditToggle() {
         setEditable(!editable);
     }
 
-    async function handleSubmit(e) {
-        e.preventDefault();
+    // async function handleDelete() {
+    //     await fetch(`http://localhost:3000/api/v1/posts/${postId}`, {
+    //         mode: "cors",
+    //         credentials: "include",
+    //         method: 'DELETE' 
+    //     });
+    // }
 
-        const newPost = {
-            id: postId,
-            title: e.target.title.value,
-            text: e.target.text.value,
-        };
+    // async function handleSubmit(e) {
+    //     e.preventDefault();
 
-        if (e.target.publish) {
-            newPost.isPublished = true;
-            newPost.publishedDate = Date.now();
-        }
+    //     const newPost = {
+    //         id: postId,
+    //         title: e.target.title.value,
+    //         text: e.target.text.value,
+    //     };
 
-        await fetch(`http://localhost:3000/api/v1/posts/${postId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newPost),
-        });
+    //     if (e.target.publish) {
+    //         newPost.isPublished = true;
+    //         newPost.publishedDate = Date.now();
+    //     }
 
-        setEditable(!editable);
-    }
+    //     await fetch(`http://localhost:3000/api/v1/posts/${postId}`, {
+    //         method: 'PUT',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(newPost),
+    //     });
+
+    //     setEditable(!editable);
+    // }
 
     if (editable) {
         return (
             <div className="post">
-                <form onSubmit={handleSubmit} className="post-edit">
+                <form className="post-edit">
                     <input
                         type="text"
                         name="title"
@@ -71,6 +71,7 @@ const Post = () => {
                 {post.isPublished ? <h2 className="post-date">{post.datePublished}</h2> : false}
                 <p className="post-text">{post.text}</p>
                 <button onClick={handleEditToggle}>Edit</button>
+                <button >Delete</button>
             </div>
         );
     }

@@ -16,11 +16,11 @@ function isCommentAuthor(req, res, next) {
 
 exports.comment_list_get = asyncHandler(async (req, res, next) => {
     const allComments = await Comment.find({ post: req.params.postId })
-        .sort({ timestamp: 1 })
+        .sort({ timestamp: -1 })
         .populate("author", "firstName lastName")
         .exec();
   
-    res.json(allComments);
+    res.status(200).json(allComments);
 });
 
 exports.comment_create = [
@@ -41,10 +41,10 @@ exports.comment_create = [
         });
 
         if (!errors.isEmpty()) {
-            return;
+            res.status(400).json(errors);
         } else {
-            await comment.save();
-            res.redirect(process.env.FRONTEND_URL + comment.url);
+            const newComment = await comment.save();
+            res.status(201).json(newComment);
         };
     }),
 ];
@@ -67,10 +67,10 @@ exports.comment_update = [
         });
   
         if (!errors.isEmpty()) {
-            res.send(errors.array());
+            res.status(400).json(errors);
         } else {
             const updatedComment = await Comment.findByIdAndUpdate(req.params.commentId, comment, {});
-            res.redirect(process.env.FRONTEND_URL + updatedComment.url);
+            res.status(200).json(updatedComment);
         }
     }),
 ];
@@ -80,6 +80,6 @@ exports.comment_delete = [
 
     asyncHandler(async (req, res, next) => {   
         await Comment.findByIdAndDelete(req.params.commentId);
-        res.redirect(process.env.FRONTEND_URL + '/comments');
+        res.status(200).end();
     }),
 ];

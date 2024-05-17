@@ -1,8 +1,6 @@
-import "./Home.css";
 import "./PostContainer.css";
 import PostCard from "./PostCard";
-import NewPostCard from "./NewPostCard";
-import { useLoaderData } from "react-router-dom";
+import { Form, useLoaderData } from "react-router-dom";
 
 const PostContainer = () => {
     const { posts } = useLoaderData();
@@ -10,7 +8,6 @@ const PostContainer = () => {
     return (
         <div className="home-container">
             <div className="post-container">
-                <NewPostCard />
                 {posts.map(post => <PostCard 
                     key={post._id} 
                     post={post} />
@@ -19,6 +16,9 @@ const PostContainer = () => {
             <div className="sidebar">
                 <h2>Description</h2>
                 <p>This is my blog, check it out!</p>
+                <Form method="POST" action="posts/create">
+                    <button type="submit" className="post-btn">Create New Post</button>
+                </Form>
             </div>
         </div>
     );

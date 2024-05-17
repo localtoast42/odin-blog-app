@@ -23,9 +23,11 @@ const PostEdit = () => {
                     rows="10" cols="33"
                     className="text-input">
                 </textarea>
-                <button type="submit" name="save" className="save-btn">Save</button>
-                {post.isPublished ? false : <button type="submit" name="publish">Publish</button>}        
-                <button type="button" onClick={() => navigate(-1)}>Cancel</button>
+                <div className="post-btns">
+                    <button type="submit" name="save" className="post-btn">Save</button>
+                    {post.isPublished ? false : <button type="submit" name="publish" className="post-btn">Publish</button>}
+                    <button type="button" onClick={() => navigate(-1)} className="post-btn">Cancel</button>
+                </div>
             </Form>
         </div>
     );

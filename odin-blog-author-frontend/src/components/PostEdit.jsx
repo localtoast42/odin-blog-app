@@ -2,12 +2,11 @@ import "./Post.css";
 import { Form, useLoaderData } from "react-router-dom";
 
 const PostEdit = () => {
-
     const { post } = useLoaderData();
 
     return (
         <div className="post">
-            <Form method="POST" action="http://localhost:3000/api/v1/posts/" className="post-edit">
+            <Form method="POST" className="post-edit">
                 <input
                     type="text"
                     name="title"

@@ -67,9 +67,7 @@ exports.post_update = [
         .withMessage("Title must be provided."),
     body("text")
         .trim()
-        .isLength( { min: 1 })
-        .escape()
-        .withMessage("Post must not be empty."),
+        .escape(),
 
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);

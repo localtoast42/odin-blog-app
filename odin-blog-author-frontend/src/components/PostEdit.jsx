@@ -25,7 +25,7 @@ const PostEdit = () => {
                 </textarea>
                 <div className="post-btns">
                     <button type="submit" name="save" className="post-btn">Save</button>
-                    {post.isPublished ? false : <button type="submit" name="publish" className="post-btn">Publish</button>}
+                    {post.isPublished ? false : <button type="submit" name="publish" value="publish" className="post-btn">Publish</button>}
                     <button type="button" onClick={() => navigate(-1)} className="post-btn">Cancel</button>
                 </div>
             </Form>

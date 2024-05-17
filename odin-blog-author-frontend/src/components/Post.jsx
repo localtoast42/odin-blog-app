@@ -10,7 +10,7 @@ const Post = () => {
                 <div className="post-info">
                     <h3 className="post-title">{post.title}</h3>
                     <h2 className="post-author">{`by ${post.author}`}</h2>
-                    {post.isPublished ? <h2 className="post-date">{post.datePublished}</h2> : false}
+                    {post.isPublished ? <h2 className="post-date">{post.publishedDateFormatted}</h2> : false}
                 </div>
                 <div className="post-btns">
                     <Form action="edit">

@@ -24,7 +24,7 @@ exports.post_get = asyncHandler(async (req, res, next) => {
         author: post.author.fullName,
     }
   
-    res.json(postData);
+    res.status(200).json(postData);
 });
 
 exports.post_list_get = asyncHandler(async (req, res, next) => {
@@ -33,22 +33,11 @@ exports.post_list_get = asyncHandler(async (req, res, next) => {
         .populate("author", "firstName lastName")
         .exec();
   
-    res.json(allPosts);
+    res.status(200).json(allPosts);
 });
 
 exports.post_create = [
     isAuthor,
-
-    body("title")
-        .trim()
-        .isLength( { min: 1 })
-        .escape()
-        .withMessage("Title must be provided."),
-    body("text")
-        .trim()
-        .isLength( { min: 1 })
-        .escape()
-        .withMessage("Post must not be empty."),
 
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
@@ -60,10 +49,10 @@ exports.post_create = [
         });
 
         if (!errors.isEmpty()) {
-            return;
+            res.status(400).json(errors);
         } else {
-            await post.save();
-            res.redirect(process.env.FRONTEND_URL + post.url);
+            const newPost = await post.save();
+            res.status(201).json(newPost);
         };
     }),
 ];
@@ -98,10 +87,10 @@ exports.post_update = [
         };
 
         if (!errors.isEmpty()) {
-            return;
+            res.status(400).json(errors);
         } else {
             const updatedPost = await Post.findByIdAndUpdate(req.params.postId, post, {});
-            res.redirect(process.env.FRONTEND_URL + updatedPost.url);
+            res.status(200).end();
         };
     }),
 ];
@@ -112,6 +101,6 @@ exports.post_delete = [
     asyncHandler(async (req, res, next) => {    
         await Comment.deleteMany({ post: req.params.postId });
         await Post.findByIdAndDelete(req.params.postId);
-        res.redirect(process.env.FRONTEND_URL + '/posts');
+        res.status(200).end();
     }),
 ]

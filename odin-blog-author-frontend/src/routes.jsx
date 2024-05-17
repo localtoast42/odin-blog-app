@@ -4,13 +4,14 @@ import Post from "./components/Post";
 import PostEdit from "./components/PostEdit";
 import Login from "./components/Login";
 import ErrorPage from "./components/ErrorPage";
-import { postLoader, postContainerLoader } from "./loaders";
+import { postLoader, postContainerLoader, userLoader } from "./loaders";
 import { postCreateAction, postUpdateAction } from "./actions";
 
 const routes = [
     {
         path: "/",
         element: <App />,
+        loader: userLoader,
         errorElement: <ErrorPage />,
         children: [
             { 

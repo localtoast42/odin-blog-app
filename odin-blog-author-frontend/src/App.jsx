@@ -1,17 +1,8 @@
 import './App.css'
-import { useState, useEffect } from "react";
-import { Outlet, NavLink } from "react-router-dom";
+import { Outlet, NavLink, useLoaderData } from "react-router-dom";
 
 function App() {
-
-    const [user, setUser] = useState();
-
-    useEffect(() => {
-        fetch(`http://localhost:3000/api/v1/users/self`, { mode: "cors", credentials: "include" })
-            .then((response) => response.json())
-            .then((response) => setUser(response))
-            .catch((error) => console.error(error));
-    }, []);
+    const { user } = useLoaderData();
 
     return (
         <>

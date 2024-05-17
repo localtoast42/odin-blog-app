@@ -20,7 +20,8 @@ exports.post_get = asyncHandler(async (req, res, next) => {
         id: post.id,
         title: post.title,
         text: post.text,
-        publishedDate: post.publishedDate,
+        isPublished: post.isPublished,
+        publishedDateFormatted: post.publishedDateFormatted,
         author: post.author.fullName,
     }
   
@@ -28,12 +29,22 @@ exports.post_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_list_get = asyncHandler(async (req, res, next) => {
-    const allPosts = await Post.find({}, "title publishedDate")
+    const allPosts = await Post.find({}, "title isPublished publishedDate")
         .sort({ publishedDate: -1 })
         .populate("author", "firstName lastName")
         .exec();
+
+    const allPostData = allPosts.map(post => {
+        return {
+            id: post.id,
+            title: post.title,
+            isPublished: post.isPublished,
+            publishedDateFormatted: post.publishedDateFormatted,
+            author: post.author.fullName
+        }
+    })
   
-    res.status(200).json(allPosts);
+    res.status(200).json(allPostData);
 });
 
 exports.post_create = [

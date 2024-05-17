@@ -1,0 +1,73 @@
+.post {
+    width: clamp(320px, 80vw, 800px);
+    padding: 10px 0;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-btns {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.post-btn {
+    padding: 8px 16px;
+    font-size: 20px;
+    font-weight: 500;
+    border: 1px solid #57534e;
+    border-radius: 5px;
+    background-color: white;
+    color: #0a0a0a;
+    box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
+}
+
+.post-btn:hover {
+    cursor: pointer;
+    background-color: #e7e5e4;
+}
+
+.post-btn:active {
+    background-color: #d6d3d1;
+}
+
+.post-title {
+    margin: 0 0 5px;
+    font-size: 28px;
+}
+
+.post-author {
+    margin: 0;
+    font-size: 18px;
+}
+
+.post-date {
+    margin: 0;
+    font-size: 18px;
+}
+
+.post-text {
+    margin: 20px 0;
+    font-size: 18px;
+}
+
+.post-edit {
+    display: grid;
+    gap: 12px;
+}
+
+.title-input {
+    font-size: 24px;
+}
+
+.text-input {
+    font-size: 18px;
+}

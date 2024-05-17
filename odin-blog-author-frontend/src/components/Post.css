@@ -32,7 +32,7 @@
 
 .post-btn:hover {
     cursor: pointer;
-    background-color: #f5f5f4;
+    background-color: #e7e5e4;
 }
 
 .post-btn:active {
@@ -70,11 +70,4 @@
 
 .text-input {
     font-size: 18px;
-}
-
-.save-btn {
-    font-size: 18px;
-    font-weight: 500;
-    padding: 8px 24px;
-    justify-self: end;
 }

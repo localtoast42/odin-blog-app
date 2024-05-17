@@ -8,20 +8,20 @@
     min-height: 48px;
     border-bottom: 1px solid #d1d5db;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 18px;
 }
 
 .navbar > a {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
     padding: 8px 12px;
     border-radius: 5px;
     text-decoration: none;
-    color: #6b7280;
+    color: #0a0a0a;
 }
 
 .navbar > a:hover {
-    background-color: #d6d3d1;
-    color: #374151;
+    background-color: #e7e5e4;
 }

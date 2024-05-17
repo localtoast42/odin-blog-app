@@ -16,6 +16,9 @@
 
 .post-container {
     display: grid;
-    grid-template-rows: 80px;
     gap: 8px;
+}
+
+.drafts-header {
+    margin-top: 0;
 }

@@ -8,5 +8,9 @@ body {
     justify-content: center;
     min-width: 320px;
     min-height: 100vh;
-    background-color: #fafaf9;
+    background-color: hsla(0,0%,100%,1);
+}
+
+h1, h2, h3, p {
+    color: hsla(0,0%,7.06%,1)
 }

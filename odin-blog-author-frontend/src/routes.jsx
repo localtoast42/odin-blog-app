@@ -1,10 +1,11 @@
 import App from "./App";
 import PostContainer from "./components/PostContainer";
 import Post from "./components/Post";
-import NewPost from "./components/NewPost";
+import PostEdit from "./components/PostEdit";
 import Login from "./components/Login";
 import ErrorPage from "./components/ErrorPage";
 import { postLoader, postContainerLoader } from "./loaders";
+import { postCreateAction, postUpdateAction } from "./actions";
 
 const routes = [
     {
@@ -23,8 +24,15 @@ const routes = [
                 loader: postLoader 
             },
             { 
+                path: "/posts/:postId/edit", 
+                element: <PostEdit />,
+                loader: postLoader,
+                action: postUpdateAction 
+            },
+            { 
                 path: "/posts/create", 
-                element: <NewPost /> 
+                element: <PostEdit />,
+                action: postCreateAction
             },
         ],
     },

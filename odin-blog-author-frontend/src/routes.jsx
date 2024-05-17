@@ -5,7 +5,7 @@ import PostEdit from "./components/PostEdit";
 import Login from "./components/Login";
 import ErrorPage from "./components/ErrorPage";
 import { postLoader, postContainerLoader, userLoader } from "./loaders";
-import { postCreateAction, postUpdateAction } from "./actions";
+import { postCreateAction, postUpdateAction, postDeleteAction } from "./actions";
 
 const routes = [
     {
@@ -29,6 +29,10 @@ const routes = [
                 element: <PostEdit />,
                 loader: postLoader,
                 action: postUpdateAction 
+            },
+            { 
+                path: "/posts/:postId/delete", 
+                action: postDeleteAction 
             },
             { 
                 path: "/posts/create", 

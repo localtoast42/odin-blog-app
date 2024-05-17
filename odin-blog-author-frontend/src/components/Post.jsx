@@ -1,5 +1,5 @@
 import "./Post.css";
-import { Link, useLoaderData } from "react-router-dom";
+import { Form, Link, useLoaderData } from "react-router-dom";
 
 const Post = () => {
     const { post } = useLoaderData();
@@ -11,7 +11,19 @@ const Post = () => {
             {post.isPublished ? <h2 className="post-date">{post.datePublished}</h2> : false}
             <p className="post-text">{post.text}</p>
             <Link to="edit">Edit</Link>
-            <button>Delete</button>
+            <Form
+                method="post"
+                action="delete"
+                onSubmit={(event) => {
+                    if (
+                        !confirm("Do you really want to delete this post?")
+                    ) {
+                        event.preventDefault();
+                    }
+                }}
+            >
+                <button type="submit">Delete</button>
+            </Form>
         </div>
     );
 };

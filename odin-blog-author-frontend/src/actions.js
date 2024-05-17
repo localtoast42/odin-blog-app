@@ -34,3 +34,12 @@ export async function postUpdateAction({ request, params }) {
 
     return redirect(`/posts/${params.postId}`);
 }
+
+export async function postDeleteAction({ params }) {
+    await fetch(`${API_URL}/posts/${params.postId}`, { 
+        method: 'DELETE', 
+        credentials: 'include'
+    });
+    
+    return redirect("/");
+}

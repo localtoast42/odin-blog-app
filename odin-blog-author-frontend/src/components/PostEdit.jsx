@@ -1,8 +1,9 @@
 import "./Post.css";
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData, useNavigate } from "react-router-dom";
 
 const PostEdit = () => {
     const { post } = useLoaderData();
+    const navigate = useNavigate();
 
     return (
         <div className="post">
@@ -24,7 +25,7 @@ const PostEdit = () => {
                 </textarea>
                 <button type="submit" name="save" className="save-btn">Save</button>
                 {post.isPublished ? false : <button type="submit" name="publish">Publish</button>}        
-                <button type="button">Cancel</button>
+                <button type="button" onClick={() => navigate(-1)}>Cancel</button>
             </Form>
         </div>
     );

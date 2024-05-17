@@ -7,26 +7,17 @@ const commentController = require('../controllers/commentController');
 router.get('/', commentController.comment_list_get);
 
 router.post('/', 
-    passport.authenticate('jwt', { 
-        session: false,
-        failureRedirect: process.env.FRONTEND_URL + "/login"
-    }),  
+    passport.authenticate('jwt', { session: false }),  
     commentController.comment_create
 );
 
 router.put('/:commentId', 
-    passport.authenticate('jwt', { 
-        session: false,
-        failureRedirect: process.env.FRONTEND_URL + "/login"
-    }),   
+    passport.authenticate('jwt', { session: false }),   
     commentController.comment_update
 );
 
 router.delete('/:commentId', 
-    passport.authenticate('jwt', { 
-        session: false,
-        failureRedirect: process.env.FRONTEND_URL + "/login"
-    }),   
+    passport.authenticate('jwt', { session: false }),   
     commentController.comment_delete
 );
 

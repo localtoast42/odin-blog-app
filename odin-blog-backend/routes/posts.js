@@ -13,26 +13,17 @@ router.get('/', postController.post_list_get);
 router.get('/:postId', postController.post_get);
 
 router.post('/', 
-    passport.authenticate('jwt', { 
-        session: false,
-        failureRedirect: process.env.FRONTEND_URL + "/login"
-    }), 
+    passport.authenticate('jwt', { session: false }), 
     postController.post_create
 );
 
 router.put('/:postId', 
-    passport.authenticate('jwt', { 
-        session: false,
-        failureRedirect: process.env.FRONTEND_URL + "/login"
-    }),  
+    passport.authenticate('jwt', { session: false }),  
     postController.post_update
 );
 
 router.delete('/:postId', 
-    passport.authenticate('jwt', { 
-        session: false,
-        failureRedirect: process.env.FRONTEND_URL + "/login"
-    }), 
+    passport.authenticate('jwt', { session: false }), 
     postController.post_delete
 );
 

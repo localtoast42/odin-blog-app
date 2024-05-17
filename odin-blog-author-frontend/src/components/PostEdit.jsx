@@ -12,13 +12,13 @@ const PostEdit = () => {
                     name="title"
                     id="post-title"
                     placeholder="Title"
-                    value={ post ? post.title : '' } 
+                    defaultValue={ post ? post.title : '' } 
                     className="title-input"/>
                 <textarea
                     name="text"
                     id="post-text"
                     placeholder="Write your post..."
-                    value={ post ? post.text : '' }
+                    defaultValue={ post ? post.text : '' }
                     rows="10" cols="33"
                     className="text-input">
                 </textarea>

@@ -3,12 +3,13 @@ import { redirect } from "react-router-dom";
 const API_URL = "http://localhost:3000/api/v1";
 
 export async function postCreateAction() {
-    const post = await fetch(`${API_URL}/posts/`, { 
+    const response = await fetch(`${API_URL}/posts/`, { 
         method: 'POST',
         credentials: 'include' 
     });
+    const post = await response.json();
 
-    return redirect(`/posts/${post.id}`);
+    return redirect(`/posts/${post._id}/edit`);
 }
 
 export async function postUpdateAction({ request, params }) {

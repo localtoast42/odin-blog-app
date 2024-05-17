@@ -1,3 +1,5 @@
+import { redirect } from "react-router-dom";
+
 const API_URL = "http://localhost:3000/api/v1";
 
 export async function userLoader() {
@@ -5,7 +7,13 @@ export async function userLoader() {
         mode: "cors",
         credentials: "include"  
     });
+
+    if (response.status == 401) {
+        return redirect('/login')
+    }
+    
     const user = await response.json();
+
     return { user };
 }
 

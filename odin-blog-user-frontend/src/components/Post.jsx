@@ -1,9 +1,12 @@
 import "./Post.css";
 import Comment from "./Comment";
 import NewComment from "./NewComment";
+import { UserContext } from "../UserContext";
+import { useContext } from "react";
 import { Form, useLoaderData } from "react-router-dom";
 
 const Post = () => {
+    const user = useContext(UserContext)
     const { post, comments } = useLoaderData();
 
     return (
@@ -37,8 +40,9 @@ const Post = () => {
             <div className="comments">
                 <NewComment></NewComment>
                 {comments && comments.map(comment => <Comment
-                    key={comment._id}
-                    comment={comment} />
+                    key={comment.id}
+                    comment={comment}
+                    isAuthor={comment.author._id===user.id} />
                 )}
             </div>
         </div>

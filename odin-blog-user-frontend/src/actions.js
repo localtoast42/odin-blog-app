@@ -2,14 +2,18 @@ import { redirect } from "react-router-dom";
 
 const API_URL = "http://localhost:3000/api/v1";
 
-export async function postCreateAction() {
-    const response = await fetch(`${API_URL}/posts/`, { 
-        method: 'POST',
-        credentials: 'include' 
-    });
-    const post = await response.json();
+export async function commentCreateAction({ request, params }) {
+    const formData = await request.formData();
+    const comment = Object.fromEntries(formData);
 
-    return redirect(`/posts/${post._id}/edit`);
+    await fetch(`${API_URL}/posts/${params.postId}/comments/`, { 
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(comment)
+    });
+
+    return redirect(`/posts/${params.postId}`);
 }
 
 export async function postUpdateAction({ request, params }) {

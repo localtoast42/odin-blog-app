@@ -1,3 +1,40 @@
+.comment-container {
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5f5;
+    padding: 12px;
+    gap: 8px;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment-info {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+
+.comment-author {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.comment-date {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.comment-text {
+    margin: 0;
+    font-size: 18px;
+    padding: 0 0 0 8px;
+}
+
 .comment-edit {
     display: flex;
     flex-direction: column;
@@ -5,6 +42,6 @@
 
 .comment-btns {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 12px;
 }

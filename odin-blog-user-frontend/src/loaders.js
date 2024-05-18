@@ -18,9 +18,14 @@ export async function userLoader() {
 }
 
 export async function postLoader({ params }) {
-    const response = await fetch(`${API_URL}/posts/${params.postId}`, { mode: "cors" });
-    const post = await response.json();
-    return { post };
+    const [postResponse, commentsResponse] = await Promise.all([
+        fetch(`${API_URL}/posts/${params.postId}`, { mode: "cors" }),
+        fetch(`${API_URL}/posts/${params.postId}/comments`, { mode: "cors" })
+    ])
+    const post = await postResponse.json();
+    const comments = await commentsResponse.json();
+
+    return { post, comments };
 }
 
 export async function postContainerLoader() {

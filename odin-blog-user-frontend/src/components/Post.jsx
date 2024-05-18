@@ -1,8 +1,10 @@
 import "./Post.css";
+import Comment from "./Comment";
+import NewComment from "./NewComment";
 import { Form, useLoaderData } from "react-router-dom";
 
 const Post = () => {
-    const { post } = useLoaderData();
+    const { post, comments } = useLoaderData();
 
     return (
         <div className="post">
@@ -32,6 +34,13 @@ const Post = () => {
                 </div>
             </div>
             <p className="post-text">{post.text}</p>
+            <div className="comments">
+                <NewComment></NewComment>
+                {comments && comments.map(comment => <Comment
+                    key={comment._id}
+                    comment={comment} />
+                )}
+            </div>
         </div>
     );
 };

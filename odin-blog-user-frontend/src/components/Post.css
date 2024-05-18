@@ -71,3 +71,8 @@
 .text-input {
     font-size: 18px;
 }
+
+.comments {
+    display: flex;
+    flex-direction: column;
+}

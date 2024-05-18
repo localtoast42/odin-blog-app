@@ -17,10 +17,20 @@ function isCommentAuthor(req, res, next) {
 exports.comment_list_get = asyncHandler(async (req, res, next) => {
     const allComments = await Comment.find({ post: req.params.postId })
         .sort({ timestamp: -1 })
-        .populate("author", "firstName lastName")
+        .populate("author", "username firstName lastName")
         .exec();
+
+    const allCommentData = allComments.map(comment => {
+        return {
+            id: comment.id,
+            author: comment.author,
+            text: comment.text,
+            postDateFormatted: comment.postDateFormatted,
+            lastEditDateFormatted: comment.lastEditDateFormatted
+        }
+    })
   
-    res.status(200).json(allComments);
+    res.status(200).json(allCommentData);
 });
 
 exports.comment_create = [

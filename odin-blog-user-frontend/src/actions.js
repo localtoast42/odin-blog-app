@@ -22,35 +22,30 @@ export async function commentCreateAction({ request, params }) {
     return redirect(`/posts/${params.postId}`);
 }
 
-export async function postUpdateAction({ request, params }) {
+export async function commentUpdateAction({ request, params }) {
     const formData = await request.formData();
     const updates = Object.fromEntries(formData);
 
-    const newPost = {
-        id: params.postId,
-        title: updates.title,
+    const newComment = {
+        id: params.commentId,
         text: updates.text,
     };
 
-    if (updates.publish) {
-        newPost.isPublished = true;
-    }
-
-    await fetch(`${API_URL}/posts/${params.postId}`, { 
+    await fetch(`${API_URL}/posts/${params.postId}/comments/${params.commentId}`, { 
         method: 'PUT', 
         credentials: 'include', 
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newPost)
+        body: JSON.stringify(newComment)
     });
 
     return redirect(`/posts/${params.postId}`);
 }
 
-export async function postDeleteAction({ params }) {
-    await fetch(`${API_URL}/posts/${params.postId}`, { 
+export async function commentDeleteAction({ params }) {
+    await fetch(`${API_URL}/posts/${params.postId}/comments/${params.commentId}`, { 
         method: 'DELETE', 
         credentials: 'include'
     });
     
-    return redirect("/");
+    return redirect(`/posts/${params.postId}`);
 }

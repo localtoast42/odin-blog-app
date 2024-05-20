@@ -4,7 +4,7 @@ import Post from "./components/Post";
 import Login from "./components/Login";
 import ErrorPage from "./components/ErrorPage";
 import { postLoader, postContainerLoader, userLoader } from "./loaders";
-import { logoutAction, commentCreateAction } from "./actions";
+import { logoutAction, commentCreateAction, commentUpdateAction, commentDeleteAction } from "./actions";
 
 const routes = [
     {
@@ -26,6 +26,14 @@ const routes = [
             { 
                 path: "/posts/:postId/comments/create", 
                 action: commentCreateAction 
+            },
+            { 
+                path: "/posts/:postId/comments/edit", 
+                action: commentUpdateAction 
+            },
+            { 
+                path: "/posts/:postId/comments/delete", 
+                action: commentDeleteAction 
             },
         ],
     },

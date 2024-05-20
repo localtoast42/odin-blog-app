@@ -19,7 +19,7 @@ export async function userLoader() {
 
 export async function postLoader({ params }) {
     const [postResponse, commentsResponse] = await Promise.all([
-        fetch(`${API_URL}/posts/${params.postId}`, { mode: "cors" }),
+        fetch(`${API_URL}/posts/${params.postId}`, { mode: "cors", credentials: 'include' }),
         fetch(`${API_URL}/posts/${params.postId}/comments`, { mode: "cors" })
     ])
     const post = await postResponse.json();
@@ -29,7 +29,7 @@ export async function postLoader({ params }) {
 }
 
 export async function postContainerLoader() {
-    const response = await fetch(`${API_URL}/posts/`, { mode: "cors" });
+    const response = await fetch(`${API_URL}/posts/`, { mode: "cors", credentials: 'include' });
     const posts = await response.json();
     return { posts };
 }

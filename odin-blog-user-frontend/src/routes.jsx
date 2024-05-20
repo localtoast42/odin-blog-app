@@ -28,11 +28,11 @@ const routes = [
                 action: commentCreateAction 
             },
             { 
-                path: "/posts/:postId/comments/edit", 
+                path: "/posts/:postId/comments/:commentId/edit", 
                 action: commentUpdateAction 
             },
             { 
-                path: "/posts/:postId/comments/delete", 
+                path: "/posts/:postId/comments/:commentId/delete", 
                 action: commentDeleteAction 
             },
         ],

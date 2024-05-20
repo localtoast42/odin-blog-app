@@ -4,7 +4,7 @@ import { Form } from "react-router-dom";
 const NewComment = () => {
     
     return (
-        <div>
+        <div className="comment-container">
             <Form method="post" action="comments/create" className="comment-edit">
                 <textarea
                     name="text"

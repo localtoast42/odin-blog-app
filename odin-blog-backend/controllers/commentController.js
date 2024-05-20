@@ -5,7 +5,7 @@ const asyncHandler = require("express-async-handler");
 function isCommentAuthor(req, res, next) {
     Comment.findOne({ _id: req.params.commentId })
         .then((comment) => {
-            if (comment.author === req.user.id) {
+            if (comment.author.toString() === req.user.id) {
                 return next();
             } else {
                 return res.status(401).json({ success: false, msg: "Unauthorized" });

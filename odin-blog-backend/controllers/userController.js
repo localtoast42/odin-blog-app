@@ -41,11 +41,13 @@ exports.user_login = asyncHandler(async (req, res, next) => {
 });
 
 exports.user_logout = asyncHandler(async (req, res, next) => {
-    res.cookie('jwt', 'none', {
-        expires: new Date(Date.now() + 5 * 1000),
-        httpOnly: true,
-    });
-    res.redirect(process.env.FRONTEND_URL);
+    res
+        .status(200)
+        .cookie('jwt', 'none', {
+            expires: new Date(Date.now() + 5 * 1000),
+            httpOnly: true,
+        })
+        .end();
 });
 
 exports.user_list_get = asyncHandler(async (req, res, next) => {

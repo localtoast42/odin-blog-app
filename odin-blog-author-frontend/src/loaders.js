@@ -18,13 +18,13 @@ export async function userLoader() {
 }
 
 export async function postLoader({ params }) {
-    const response = await fetch(`${API_URL}/posts/${params.postId}`, { mode: "cors" });
+    const response = await fetch(`${API_URL}/posts/${params.postId}`, { mode: "cors", credentials: 'include' });
     const post = await response.json();
     return { post };
 }
 
 export async function postContainerLoader() {
-    const response = await fetch(`${API_URL}/posts/`, { mode: "cors" });
+    const response = await fetch(`${API_URL}/posts/`, { mode: "cors", credentials: 'include' });
     const posts = await response.json();
     return { posts };
 }

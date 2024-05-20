@@ -29,7 +29,9 @@ exports.post_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.post_list_get = asyncHandler(async (req, res, next) => {
-    const allPosts = await Post.find({}, "title isPublished publishedDate")
+    const filter = req.user.isAuthor ? {} : { isPublished: true };
+
+    const allPosts = await Post.find(filter, "title isPublished publishedDate")
         .sort({ publishedDate: -1 })
         .populate("author", "firstName lastName")
         .exec();

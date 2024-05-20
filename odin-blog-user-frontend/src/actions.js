@@ -2,6 +2,12 @@ import { redirect } from "react-router-dom";
 
 const API_URL = "http://localhost:3000/api/v1";
 
+export async function logoutAction() {
+    await fetch(`${API_URL}/logout`, { method: 'POST' });
+
+    return redirect('/login');
+}
+
 export async function commentCreateAction({ request, params }) {
     const formData = await request.formData();
     const comment = Object.fromEntries(formData);

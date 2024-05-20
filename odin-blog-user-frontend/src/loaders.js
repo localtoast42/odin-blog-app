@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 
-const API_URL = "http://localhost:3000/api/v1";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export async function userLoader() {
     const response = await fetch(`${API_URL}/users/self`, { 

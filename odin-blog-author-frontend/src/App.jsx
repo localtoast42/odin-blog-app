@@ -1,5 +1,5 @@
 import './App.css'
-import { Outlet, NavLink, useLoaderData } from "react-router-dom";
+import { Form, Outlet, NavLink, useLoaderData } from "react-router-dom";
 
 function App() {
     const { user } = useLoaderData();
@@ -9,7 +9,9 @@ function App() {
             <nav className='navbar'>
                 <NavLink to="">Home</NavLink>
                 {user ? (
-                    <a href="http://localhost:3000/api/v1/logout">Sign out</a>
+                    <Form method='post' action='logout'>
+                        <button className='logout-btn'>Sign out</button>
+                    </Form>
                 ) : (
                     <NavLink to="login">Sign in</NavLink>
                 )}

@@ -34,7 +34,7 @@ exports.user_login = asyncHandler(async (req, res, next) => {
                 encode: String, 
                 expires: new Date(Date.now() + 24 * 3600000) 
             })
-            .redirect(process.env.FRONTEND_URL);
+            .end();
     } catch(err) {
         return next(err);
     }

@@ -16,13 +16,15 @@ export async function loginAction({ request }) {
     if (response.status == 401) {
         return redirect('/login');
     } else {
+        const responseData = await response.json();
+        localStorage.setItem("jwt", responseData.token);
         return redirect('/');
     }
 
 }
 
 export async function logoutAction() {
-    await fetch(`${API_URL}/logout`, { method: 'POST', credentials: 'include' });
+    localStorage.removeItem("jwt");
 
     return redirect('/login');
 }
@@ -31,10 +33,14 @@ export async function commentCreateAction({ request, params }) {
     const formData = await request.formData();
     const comment = Object.fromEntries(formData);
 
+    const token = localStorage.getItem("jwt");
+
     await fetch(`${API_URL}/posts/${params.postId}/comments/`, { 
         method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        },
         body: JSON.stringify(comment)
     });
 
@@ -50,10 +56,14 @@ export async function commentUpdateAction({ request, params }) {
         text: updates.text,
     };
 
+    const token = localStorage.getItem("jwt");
+
     await fetch(`${API_URL}/posts/${params.postId}/comments/${params.commentId}`, { 
         method: 'PUT', 
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        },
         body: JSON.stringify(newComment)
     });
 
@@ -61,9 +71,11 @@ export async function commentUpdateAction({ request, params }) {
 }
 
 export async function commentDeleteAction({ params }) {
+    const token = localStorage.getItem("jwt");
+
     await fetch(`${API_URL}/posts/${params.postId}/comments/${params.commentId}`, { 
         method: 'DELETE', 
-        credentials: 'include'
+        headers: { 'Authorization': token },
     });
     
     return redirect(`/posts/${params.postId}`);

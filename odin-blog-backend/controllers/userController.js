@@ -3,6 +3,7 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcryptjs");
 const utils = require('../lib/utils');
+const { JsonWebTokenError } = require("jsonwebtoken");
 
 function isUserCreator(req, res, next) {
     User.findOne({ _id: req.params.userId })
@@ -28,13 +29,8 @@ exports.user_login = asyncHandler(async (req, res, next) => {
         }
         const tokenObject = utils.issueJWT(user);
         res
-            .status(201)
-            .cookie('jwt', tokenObject.token, { 
-                httpOnly: true,
-                encode: String, 
-                expires: new Date(Date.now() + 24 * 3600000) 
-            })
-            .end();
+            .status(200)
+            .json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
     } catch(err) {
         return next(err);
     }

@@ -1,11 +1,13 @@
 import { redirect } from "react-router-dom";
 
-const API_URL = "http://localhost:3000/api/v1";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export async function userLoader() {
+    const token = localStorage.getItem("jwt");
+
     const response = await fetch(`${API_URL}/users/self`, { 
         mode: "cors",
-        credentials: "include"  
+        headers: { 'Authorization': token }
     });
 
     if (response.status == 401) {
@@ -18,13 +20,25 @@ export async function userLoader() {
 }
 
 export async function postLoader({ params }) {
-    const response = await fetch(`${API_URL}/posts/${params.postId}`, { mode: "cors", credentials: 'include' });
+    const token = localStorage.getItem("jwt");
+
+    const response = await fetch(`${API_URL}/posts/${params.postId}`, { 
+        mode: "cors", 
+        headers: { 'Authorization': token }
+    });
+
     const post = await response.json();
     return { post };
 }
 
 export async function postContainerLoader() {
-    const response = await fetch(`${API_URL}/posts/`, { mode: "cors", credentials: 'include' });
+    const token = localStorage.getItem("jwt");
+
+    const response = await fetch(`${API_URL}/posts/`, { 
+        mode: "cors", 
+        headers: { 'Authorization': token }
+    });
+
     const posts = await response.json();
     return { posts };
 }

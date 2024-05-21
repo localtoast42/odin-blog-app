@@ -1,17 +1,40 @@
 import { redirect } from "react-router-dom";
 
-const API_URL = "http://localhost:3000/api/v1";
+const API_URL = import.meta.env.VITE_API_URL;
+
+export async function loginAction({ request }) {
+    const formData = await request.formData();
+    const user = Object.fromEntries(formData);
+
+    const response = await fetch(`${API_URL}/login`, { 
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user) 
+    });
+
+    if (response.status == 401) {
+        return redirect('/login');
+    } else {
+        const responseData = await response.json();
+        localStorage.setItem("jwt", responseData.token);
+        return redirect('/');
+    }
+
+}
 
 export async function logoutAction() {
-    await fetch(`${API_URL}/logout`, { method: 'POST' });
+    localStorage.removeItem("jwt");
 
     return redirect('/login');
 }
 
 export async function postCreateAction() {
+    const token = localStorage.getItem("jwt");
+
     const response = await fetch(`${API_URL}/posts/`, { 
         method: 'POST',
-        credentials: 'include' 
+        headers: { 'Authorization': token }
     });
     const post = await response.json();
 
@@ -32,10 +55,14 @@ export async function postUpdateAction({ request, params }) {
         newPost.isPublished = true;
     }
 
+    const token = localStorage.getItem("jwt");
+
     await fetch(`${API_URL}/posts/${params.postId}`, { 
         method: 'PUT', 
-        credentials: 'include', 
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': token 
+        },
         body: JSON.stringify(newPost)
     });
 
@@ -43,9 +70,11 @@ export async function postUpdateAction({ request, params }) {
 }
 
 export async function postDeleteAction({ params }) {
+    const token = localStorage.getItem("jwt");
+
     await fetch(`${API_URL}/posts/${params.postId}`, { 
         method: 'DELETE', 
-        credentials: 'include'
+        headers: { 'Authorization': token }
     });
     
     return redirect("/");

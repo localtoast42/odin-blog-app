@@ -4,7 +4,7 @@ import Post from "./components/Post";
 import Login from "./components/Login";
 import ErrorPage from "./components/ErrorPage";
 import { postLoader, postContainerLoader, userLoader } from "./loaders";
-import { logoutAction, commentCreateAction, commentUpdateAction, commentDeleteAction } from "./actions";
+import { loginAction, logoutAction, commentCreateAction, commentUpdateAction, commentDeleteAction } from "./actions";
 
 const routes = [
     {
@@ -41,6 +41,7 @@ const routes = [
         path: "/login",
         element: <Login />,
         errorElement: <ErrorPage />,
+        action: loginAction
     },
     {
         path: "/logout",

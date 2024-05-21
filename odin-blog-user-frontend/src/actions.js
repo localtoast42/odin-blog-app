@@ -2,6 +2,12 @@ import { redirect } from "react-router-dom";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+export async function loginAction() {
+    await fetch(`${API_URL}/login`, { method: 'POST' });
+
+    return redirect('/');
+}
+
 export async function logoutAction() {
     await fetch(`${API_URL}/logout`, { method: 'POST' });
 

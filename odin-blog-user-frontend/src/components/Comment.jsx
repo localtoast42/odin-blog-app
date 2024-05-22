@@ -40,7 +40,12 @@ const Comment = ({ comment, isAuthor }) => {
             </div>
             {!isEditable && <p className="comment-text">{comment.text}</p>}
             {isEditable && 
-                <Form method="post" action={`comments/${comment.id}/edit`} className="comment-edit">
+                <Form 
+                    method="post" 
+                    action={`comments/${comment.id}/edit`} 
+                    onSubmit={toggleEditable}
+                    className="comment-edit"
+                >
                     <textarea
                         name="text"
                         id="comment-text"

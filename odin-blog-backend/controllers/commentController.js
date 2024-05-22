@@ -71,16 +71,16 @@ exports.comment_update = [
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
 
-        const comment = new Comment({
-            text: req.body.text,
-            lastEditDate: Date.now(),
-        });
+        const comment = await Comment.findOne({ _id: req.params.commentId });
+
+        comment.text = req.body.text;
+        comment.lastEditDate = Date.now();
   
         if (!errors.isEmpty()) {
             res.status(400).json(errors);
         } else {
-            const updatedComment = await Comment.findByIdAndUpdate(req.params.commentId, comment, {});
-            res.status(200).json(updatedComment);
+            const updatedComment = await Comment.findByIdAndUpdate(comment._id, comment, {});
+            res.status(200).end();
         }
     }),
 ];

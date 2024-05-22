@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { Form } from "react-router-dom";
 
-const Comment = ({ comment, isAuthor }) => {
+const Comment = ({ comment, isAuthor, isAdmin }) => {
     const [isEditable, setIsEditable] = useState(false);
 
     function toggleEditable() {
@@ -17,7 +17,7 @@ const Comment = ({ comment, isAuthor }) => {
                     <h3 className="comment-author">{comment.author.username}</h3>
                     <h3 className="comment-date">{comment.postDateFormatted}</h3>
                 </div>
-                {isAuthor && (
+                {(isAuthor || isAdmin) && (
                     <div>
                         {!isEditable && <button onClick={toggleEditable}>Edit</button>}
                         {isEditable && 
@@ -65,7 +65,8 @@ const Comment = ({ comment, isAuthor }) => {
 
 Comment.propTypes = {
     comment: PropTypes.object.isRequired,
-    isAuthor: PropTypes.bool.isRequired
+    isAuthor: PropTypes.bool.isRequired,
+    isAdmin: PropTypes.bool.isRequired
 }
 
 export default Comment;

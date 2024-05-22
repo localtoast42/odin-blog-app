@@ -4,5 +4,6 @@ export const UserContext = createContext({
     id: '',
     firstName: '',
     lastName: '',
-    username: ''
+    username: '',
+    isAuthor: false
 });

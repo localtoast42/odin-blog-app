@@ -79,3 +79,55 @@ export async function postDeleteAction({ params }) {
     
     return redirect("/");
 }
+
+export async function commentCreateAction({ request, params }) {
+    const formData = await request.formData();
+    const comment = Object.fromEntries(formData);
+
+    const token = localStorage.getItem("jwt");
+
+    await fetch(`${API_URL}/posts/${params.postId}/comments/`, { 
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        },
+        body: JSON.stringify(comment)
+    });
+
+    return redirect(`/posts/${params.postId}`);
+}
+
+export async function commentUpdateAction({ request, params }) {
+    const formData = await request.formData();
+    const updates = Object.fromEntries(formData);
+
+    const newComment = {
+        id: params.commentId,
+        text: updates.text,
+    };
+
+    const token = localStorage.getItem("jwt");
+
+    await fetch(`${API_URL}/posts/${params.postId}/comments/${params.commentId}`, { 
+        method: 'PUT', 
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': token,
+        },
+        body: JSON.stringify(newComment)
+    });
+
+    return redirect(`/posts/${params.postId}`);
+}
+
+export async function commentDeleteAction({ params }) {
+    const token = localStorage.getItem("jwt");
+
+    await fetch(`${API_URL}/posts/${params.postId}/comments/${params.commentId}`, { 
+        method: 'DELETE', 
+        headers: { 'Authorization': token },
+    });
+    
+    return redirect(`/posts/${params.postId}`);
+}

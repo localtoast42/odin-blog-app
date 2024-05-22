@@ -1,4 +1,5 @@
 import './App.css'
+import { UserContext } from "./UserContext";
 import { Form, Outlet, NavLink, useLoaderData } from "react-router-dom";
 
 function App() {
@@ -17,7 +18,9 @@ function App() {
                 )}
             </nav>
             <div className='content'>
-                <Outlet />
+                <UserContext.Provider value={ user }>
+                    <Outlet />
+                </UserContext.Provider>
             </div>
         </>
     )

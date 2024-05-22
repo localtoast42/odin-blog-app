@@ -22,13 +22,20 @@ export async function userLoader() {
 export async function postLoader({ params }) {
     const token = localStorage.getItem("jwt");
 
-    const response = await fetch(`${API_URL}/posts/${params.postId}`, { 
-        mode: "cors", 
-        headers: { 'Authorization': token }
-    });
+    const [postResponse, commentsResponse] = await Promise.all([
+        fetch(`${API_URL}/posts/${params.postId}`, { 
+            mode: "cors", 
+            headers: { 'Authorization': token }
+        }),
+        fetch(`${API_URL}/posts/${params.postId}/comments`, { 
+            mode: "cors",
+            headers: { 'Authorization': token }
+        })
+    ])
+    const post = await postResponse.json();
+    const comments = await commentsResponse.json();
 
-    const post = await response.json();
-    return { post };
+    return { post, comments };
 }
 
 export async function postContainerLoader() {

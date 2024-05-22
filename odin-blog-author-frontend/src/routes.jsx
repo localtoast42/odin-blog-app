@@ -5,7 +5,15 @@ import PostEdit from "./components/PostEdit";
 import Login from "./components/Login";
 import ErrorPage from "./components/ErrorPage";
 import { postLoader, postContainerLoader, userLoader } from "./loaders";
-import { loginAction, logoutAction, postCreateAction, postUpdateAction, postDeleteAction } from "./actions";
+import { 
+    loginAction, 
+    logoutAction, 
+    postCreateAction, 
+    postUpdateAction, 
+    postDeleteAction,
+    commentCreateAction,
+    commentUpdateAction,
+    commentDeleteAction } from "./actions";
 
 const routes = [
     {
@@ -38,6 +46,18 @@ const routes = [
                 path: "/posts/create", 
                 element: <PostEdit />,
                 action: postCreateAction
+            },
+            { 
+                path: "/posts/:postId/comments/create", 
+                action: commentCreateAction 
+            },
+            { 
+                path: "/posts/:postId/comments/:commentId/edit", 
+                action: commentUpdateAction 
+            },
+            { 
+                path: "/posts/:postId/comments/:commentId/delete", 
+                action: commentDeleteAction 
             },
         ],
     },

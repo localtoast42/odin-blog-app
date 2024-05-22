@@ -85,14 +85,12 @@ exports.post_update = [
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
 
-        const post = new Post({
-            _id: req.params.postId,
-            title: req.body.title,
-            author: req.user.id,
-            text: req.body.text,
-        });
+        const post = await Post.findOne({ _id: req.params.postId });
 
-        if (req.body.isPublished) {
+        post.title = req.body.title;
+        post.text = req.body.text;
+
+        if (!post.isPublished && req.body.isPublished) {
             post.isPublished = true;
             post.publishedDate = Date.now();
         };
@@ -100,7 +98,7 @@ exports.post_update = [
         if (!errors.isEmpty()) {
             res.status(400).json(errors);
         } else {
-            const updatedPost = await Post.findByIdAndUpdate(req.params.postId, post, {});
+            const updatedPost = await Post.findByIdAndUpdate(post._id, post, {});
             res.status(200).end();
         };
     }),

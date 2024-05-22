@@ -3,6 +3,10 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
 function isCommentAuthor(req, res, next) {
+    if (req.user.isAuthor){
+        next();
+    }
+    
     Comment.findOne({ _id: req.params.commentId })
         .then((comment) => {
             if (comment.author.toString() === req.user.id) {

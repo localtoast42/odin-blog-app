@@ -56,7 +56,8 @@ exports.user_self_get = asyncHandler(async (req, res, next) => {
         id: req.user.id,
         firstName: req.user.firstName,
         lastName: req.user.lastName,
-        username: req.user.username
+        username: req.user.username,
+        isAuthor: req.user.isAuthor
     }
 
     res.json(user);
